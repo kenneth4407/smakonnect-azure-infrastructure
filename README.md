@@ -114,8 +114,8 @@ I'll complete the project in 12 phases and update this repository as I go.
 
 | Phase | What I'll Be Working On | Status |
 |---|---|---|
-| 01 | Azure Subscription Assessment and Architecture Planning | In Progress |
-| 02 | Resource Groups, Tags, and Azure Governance | Not Started |
+| 01 | Azure Subscription Assessment and Architecture Planning | Completed |
+| 02 | Resource Groups, Tags, and Azure Governance | Completed |
 | 03 | Microsoft Entra ID Concepts and Azure RBAC | Not Started |
 | 04 | Virtual Networks, Subnets, and Network Security | Not Started |
 | 05 | Windows Server and Linux Virtual Machines | Not Started |
