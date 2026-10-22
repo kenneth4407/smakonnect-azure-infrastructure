@@ -1,6 +1,6 @@
 # Smakonnect Tech Innovation | Azure Infrastructure Project
 
-### Building and Managing an Azure Environment — AZ Hands-On Project
+### Building and Managing an Azure Environment — AZ-104 Hands-On Project
 
 ## About This Project
 
@@ -127,6 +127,29 @@ I'll complete the project in 12 phases and update this repository as I go.
 | 11 | IT Support and MSP Troubleshooting Scenarios | Not Started |
 | 12 | Final Project Review and AZ-104 Interview Preparation | Not Started |
 
+## Phase Documentation
+
+I've organized the project documentation by phase so I can keep track of the work I've completed and refer back to it when reviewing Azure concepts or preparing for interviews.
+
+Each completed phase links to its documentation in this repository.
+
+| Phase | Documentation | Status |
+|---|---|---|
+| 01 — Environment Assessment and Architecture Planning | [View Documentation](phase-01-environment-assessment) | Completed |
+| 02 — Azure Governance and Resource Organization | [View Documentation](phase-02-azure-governance) | Completed |
+| 03 — Microsoft Entra ID and Azure RBAC | Coming soon | Not Started |
+| 04 — Azure Virtual Networking and Connectivity | Coming soon | Not Started |
+| 05 — Windows Server and Linux Virtual Machines | Coming soon | Not Started |
+| 06 — Azure Storage and Data Protection | Coming soon | Not Started |
+| 07 — Advanced Networking and Hybrid Connectivity | Coming soon | Not Started |
+| 08 — Azure Monitoring and Troubleshooting | Coming soon | Not Started |
+| 09 — Azure Backup and Disaster Recovery | Coming soon | Not Started |
+| 10 — PowerShell, Azure CLI, and Bicep | Coming soon | Not Started |
+| 11 — IT Support and MSP Troubleshooting Scenarios | Coming soon | Not Started |
+| 12 — Final Project Review and AZ-104 Interview Preparation | Coming soon | Not Started |
+
+As I complete each phase, I'll update its status and replace **Coming soon** with a link to the corresponding documentation.
+
 ## How I'm Documenting My Work
 
 After each phase, I'll add documentation showing:
@@ -143,23 +166,38 @@ I want the documentation to be useful both as a record of my learning and as som
 
 Since this is a student lab, I have to be careful with my Azure credits.
 
+I've configured a monthly Azure budget with spending alerts to help me monitor costs. I understand that budget alerts do not automatically stop Azure charges.
+
 My plan is to check costs before deploying resources, avoid leaving virtual machines running unnecessarily, and remove resources I no longer need.
 
 I'll also make sure not to upload passwords, access keys, personal information, or sensitive Azure account details to GitHub.
 
 ## Current Progress
 
-So far, I've:
+I've completed the first two phases of the project.
+
+### Phase 1 — Environment Assessment and Architecture Planning
 
 - Checked my Azure subscription and available credits.
 - Confirmed my Azure subscription Owner role.
-- Reviewed some of the Azure Policy assignments.
+- Reviewed existing Azure Policy assignments.
 - Checked the available regional compute quota.
 - Planned the virtual network and subnet layout.
 - Decided how I'll deploy my Windows and Linux virtual machines.
 - Planned the storage, monitoring, and cost-management approach.
 
-**Next up:** Finish documenting Phase 1, then start creating and configuring Azure resources.
+### Phase 2 — Azure Governance and Resource Organization
+
+- Created the `rg-smakonnect-lab-01` resource group in Canada Central.
+- Applied resource tags for project identification, ownership, and environment tracking.
+- Configured a monthly Azure budget with spending alerts at 50%, 80%, and 100%.
+- Applied a Delete lock to help protect the resource group from accidental deletion.
+- Assigned an Azure Policy requiring the `Environment` tag, with enforcement disabled for the lab.
+- Verified the governance settings in the Azure Portal.
+
+These activities have helped me understand how Azure administrators organize resources, monitor spending, and apply governance controls before deploying infrastructure.
+
+**Next up:** Phase 3 — Microsoft Entra ID Concepts and Azure Role-Based Access Control (RBAC).
 
 ---
 
