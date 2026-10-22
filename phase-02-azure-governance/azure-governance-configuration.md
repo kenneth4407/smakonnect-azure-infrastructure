@@ -67,4 +67,28 @@ I learned that Azure governance is not only about creating rules. It is also abo
 
 **Completed — Azure Governance and Resource Organization**
 
-**Next Phase:** Microsoft Entra ID and Azure Role-Based Access Control (RBAC).
+## Configuration Evidence
+
+The following screenshots show the Azure governance configurations I completed and verified during this phase.
+
+### 1. Resource Group
+
+![Smakonnect resource group overview](screenshots/01-resource-group.png)
+
+### 2. Resource Tags
+
+![Resource group tags](screenshots/02-resource-tags.png)
+
+### 3. Budget and Cost Alerts
+
+![Azure budget and alert configuration](screenshots/03-budget-alerts.png)
+
+### 4. Resource Lock
+
+![Delete lock configuration](screenshots/04-resource-lock.png)
+
+### 5. Azure Policy Assignment
+
+![Azure Policy assignment configuration](screenshots/05-policy-assignment.png)
+
+The Azure Policy assignment was configured with enforcement disabled (`DoNotEnforce`). When I initially checked the Compliance dashboard, the evaluation had not started, so no resource compliance results were available yet.
