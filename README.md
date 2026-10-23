@@ -65,7 +65,7 @@ I'm using a school-provided **Visual Studio Professional Azure subscription** fo
 
 I've confirmed that I have the Owner role on the Azure subscription, which gives me access to manage Azure resources within the subscription's limits.
 
-However, the Microsoft Entra tenant is managed by my school, so I don't have access to all the identity administration features. For those areas, I'll document what I learn and use alternative labs where possible.
+However, the Microsoft Entra tenant is managed by my school, so I don't have access to all the identity administration features. During Phase 3, I focused on Azure RBAC and documented the directory access limitation instead of attempting changes outside my permissions.
 
 I'm also working with limited Azure credits, so I need to pay attention to costs and clean up resources when I'm finished with them.
 
@@ -88,7 +88,7 @@ Address space: `10.10.0.0/16`
 
 I chose separate subnets so I can practice network organization, security rules, and troubleshooting.
 
-The network is still in the planning stage. I'll deploy and test it during the networking phase.
+The network is still in the planning stage. I'll deploy and test it during Phase 4.
 
 ## Virtual Machines
 
@@ -116,8 +116,8 @@ I'll complete the project in 12 phases and update this repository as I go.
 |---|---|---|
 | 01 | Azure Subscription Assessment and Architecture Planning | Completed |
 | 02 | Resource Groups, Tags, and Azure Governance | Completed |
-| 03 | Microsoft Entra ID Concepts and Azure RBAC | Not Started |
-| 04 | Virtual Networks, Subnets, and Network Security | Not Started |
+| 03 | Azure RBAC and Access Management | Completed |
+| 04 | Virtual Networks, Subnets, and Network Security | In Progress |
 | 05 | Windows Server and Linux Virtual Machines | Not Started |
 | 06 | Azure Storage and Data Protection | Not Started |
 | 07 | Advanced Networking and Hybrid Connectivity | Not Started |
@@ -137,8 +137,8 @@ Each completed phase links to its documentation in this repository.
 |---|---|---|
 | 01 — Environment Assessment and Architecture Planning | [View Documentation](phase-01-environment-assessment) | Completed |
 | 02 — Azure Governance and Resource Organization | [View Documentation](phase-02-azure-governance) | Completed |
-| 3  - Azure RBAC & Access Management | [View Documentation](phase-03-azure-rbac/azure-rbac-access-management.md) | Completed |
-| 04 — Azure Virtual Networking and Connectivity | Coming soon | Not Started |
+| 03 — Azure RBAC and Access Management | [View Documentation](phase-03-azure-rbac/azure-rbac-access-management.md) | Completed |
+| 04 — Azure Virtual Networking and Connectivity | Coming soon | In Progress |
 | 05 — Windows Server and Linux Virtual Machines | Coming soon | Not Started |
 | 06 — Azure Storage and Data Protection | Coming soon | Not Started |
 | 07 — Advanced Networking and Hybrid Connectivity | Coming soon | Not Started |
@@ -174,7 +174,7 @@ I'll also make sure not to upload passwords, access keys, personal information, 
 
 ## Current Progress
 
-I've completed the first two phases of the project.
+I've completed the first three phases of the project, covering environment assessment, Azure governance, and Azure RBAC access management.
 
 ### Phase 1 — Environment Assessment and Architecture Planning
 
@@ -195,9 +195,41 @@ I've completed the first two phases of the project.
 - Assigned an Azure Policy requiring the `Environment` tag, with enforcement disabled for the lab.
 - Verified the governance settings in the Azure Portal.
 
-These activities have helped me understand how Azure administrators organize resources, monitor spending, and apply governance controls before deploying infrastructure.
+These activities helped me understand how Azure administrators organize resources, monitor spending, and apply governance controls before deploying infrastructure.
 
-**Next up:** Phase 3 — Microsoft Entra ID Concepts and Azure Role-Based Access Control (RBAC).
+### Phase 3 — Azure RBAC and Access Management
+
+In this phase, I focused on understanding how Azure administrators manage permissions and investigate access-related issues.
+
+- Verified that my Azure account has the **Owner** role inherited from the subscription.
+- Reviewed the built-in **Owner, Contributor, and Reader** roles and compared their permissions.
+- Learned how Azure RBAC uses security principals, role definitions, and scopes to control access.
+- Opened the **Add role assignment** wizard and explored how the Reader role would be assigned at resource group scope.
+- Reviewed **Active and Eligible** assignment types and learned how eligible permissions can be activated through Privileged Identity Management (PIM).
+- Exited the role assignment wizard without creating any new assignments.
+- Reviewed the resource group's **Role assignments** and **Activity log** sections.
+- Practiced an RBAC troubleshooting scenario involving an IT support technician who could view Azure resources but could not modify them.
+- Documented the Microsoft Entra ID access restriction associated with my school-managed tenant.
+
+One important lesson from this phase was that **Azure subscription Owner permissions and Microsoft Entra tenant administrator permissions are different**.
+
+I also learned why the principle of least privilege matters and how role assignments, inheritance, and scope affect access to Azure resources.
+
+I completed the phase without creating new users or changing existing role assignments.
+
+**Phase 3 documentation:** [Azure RBAC and Access Management](phase-03-azure-rbac/azure-rbac-access-management.md)
+
+### Phase 4 — Azure Virtual Networking and Connectivity
+
+I'm now moving into the networking phase, where I'll build the virtual network and subnet layout planned during Phase 1.
+
+My first task is to create `vnet-smakonnect-lab-01` in Canada Central with separate subnets for management, servers, applications, and private endpoints.
+
+I'll then explore Network Security Groups (NSGs), network traffic rules, and connectivity troubleshooting.
+
+**Current project progress: 3 of 12 phases completed (25%).**
+
+**Next up:** Phase 4 — Azure Virtual Networking and Connectivity.
 
 ---
 
