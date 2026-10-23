@@ -87,6 +87,24 @@ I learned that permissions should be assigned according to job responsibilities,
 
 Although I did not create new user accounts or role assignments, I gained practical experience reviewing access configurations and investigating authorization scenarios.
 
+## Screenshot Evidence
+
+The following screenshots document my Azure RBAC access review and troubleshooting exercises.
+
+### 1. Owner Role and Inherited Access
+
+![Inherited Owner role](screenshots/01-owner-role.png)
+
+### 2. Built-in Azure RBAC Roles
+
+![Built-in Azure RBAC roles](screenshots/02-built-in-roles.png)
+
+### 3. Reader Role Assignment Wizard
+
+![Reader role assignment wizard](screenshots/03-reader-role-wizard.png)
+
+
+
 ## Phase Status
 
 **Completed — Azure RBAC and Access Management**
