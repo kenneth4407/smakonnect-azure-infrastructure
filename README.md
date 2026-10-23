@@ -137,7 +137,7 @@ Each completed phase links to its documentation in this repository.
 |---|---|---|
 | 01 — Environment Assessment and Architecture Planning | [View Documentation](phase-01-environment-assessment) | Completed |
 | 02 — Azure Governance and Resource Organization | [View Documentation](phase-02-azure-governance) | Completed |
-| 03 — Microsoft Entra ID and Azure RBAC | Coming soon | Not Started |
+| 3  - Azure RBAC & Access Management | [View Documentation](phase-03-azure-rbac/azure-rbac-access-management.md) | Completed |
 | 04 — Azure Virtual Networking and Connectivity | Coming soon | Not Started |
 | 05 — Windows Server and Linux Virtual Machines | Coming soon | Not Started |
 | 06 — Azure Storage and Data Protection | Coming soon | Not Started |
