@@ -69,11 +69,11 @@ However, the Microsoft Entra tenant is managed by my school, so I don't have acc
 
 I'm also working with limited Azure credits, so I need to pay attention to costs and clean up resources when I'm finished with them.
 
-## Planned Network Setup
+## Azure Network Setup
 
-I've decided to use **Canada Central** as my main Azure region.
+I deployed my virtual network in **Canada Central** during Phase 4.
 
-My planned virtual network is:
+The virtual network is:
 
 `vnet-smakonnect-lab-01`
 
@@ -81,14 +81,20 @@ Address space: `10.10.0.0/16`
 
 | Subnet | IP Range | What I'll Use It For |
 |---|---|---|
-| Management | 10.10.1.0/24 | Administration and management |
-| Servers | 10.10.2.0/24 | Windows Server |
-| Applications | 10.10.3.0/24 | Linux and application workloads |
-| Private Endpoints | 10.10.4.0/24 | Private connections to Azure services |
+| Management | `10.10.1.0/24` | Administration and management |
+| Servers | `10.10.2.0/24` | Windows Server and Linux virtual machines |
+| Applications | `10.10.3.0/24` | Application workloads |
+| Private Endpoints | `10.10.4.0/24` | Private connections to Azure services |
 
-I chose separate subnets so I can practice network organization, security rules, and troubleshooting.
+I chose separate subnets so I can organize different workloads and apply network security rules as the environment grows.
 
-The network is still in the planning stage. I'll deploy and test it during Phase 4.
+I also created a Network Security Group called `nsg-smakonnect-servers-01` and associated it with the Servers subnet.
+
+The NSG includes a custom inbound rule allowing RDP traffic from the Management subnet to the Servers subnet on TCP port 3389.
+
+This was an important part of my learning because I got to understand how inbound and outbound traffic works, how NSG rule priorities are evaluated, and how to decide which subnet an NSG should protect.
+
+The network configuration has been verified, but I haven't tested live connectivity yet because the virtual machines will be deployed in Phase 5.
 
 ## Virtual Machines
 
@@ -117,7 +123,7 @@ I'll complete the project in 12 phases and update this repository as I go.
 | 01 | Azure Subscription Assessment and Architecture Planning | Completed |
 | 02 | Resource Groups, Tags, and Azure Governance | Completed |
 | 03 | Azure RBAC and Access Management | Completed |
-| 04 | Virtual Networks, Subnets, and Network Security | In Progress |
+| 04 | Virtual Networks, Subnets, and Network Security | Completed |
 | 05 | Windows Server and Linux Virtual Machines | Not Started |
 | 06 | Azure Storage and Data Protection | Not Started |
 | 07 | Advanced Networking and Hybrid Connectivity | Not Started |
@@ -138,7 +144,7 @@ Each completed phase links to its documentation in this repository.
 | 01 — Environment Assessment and Architecture Planning | [View Documentation](phase-01-environment-assessment) | Completed |
 | 02 — Azure Governance and Resource Organization | [View Documentation](phase-02-azure-governance) | Completed |
 | 03 — Azure RBAC and Access Management | [View Documentation](phase-03-azure-rbac/azure-rbac-access-management.md) | Completed |
-| 04 — Azure Virtual Networking and Connectivity | Coming soon | In Progress |
+| 04 — Azure Virtual Networking and Connectivity | [View Documentation](phase-04-azure-virtual-networking/azure-virtual-networking-configuration.md) | Completed |
 | 05 — Windows Server and Linux Virtual Machines | Coming soon | Not Started |
 | 06 — Azure Storage and Data Protection | Coming soon | Not Started |
 | 07 — Advanced Networking and Hybrid Connectivity | Coming soon | Not Started |
@@ -174,7 +180,7 @@ I'll also make sure not to upload passwords, access keys, personal information, 
 
 ## Current Progress
 
-I've completed the first three phases of the project, covering environment assessment, Azure governance, and Azure RBAC access management.
+I've completed the first four phases of the project, covering environment assessment, Azure governance, Azure RBAC, and Azure virtual networking.
 
 ### Phase 1 — Environment Assessment and Architecture Planning
 
@@ -221,15 +227,39 @@ I completed the phase without creating new users or changing existing role assig
 
 ### Phase 4 — Azure Virtual Networking and Connectivity
 
-I'm now moving into the networking phase, where I'll build the virtual network and subnet layout planned during Phase 1.
+In this phase, I moved from planning the network to actually building it in Azure.
 
-My first task is to create `vnet-smakonnect-lab-01` in Canada Central with separate subnets for management, servers, applications, and private endpoints.
+I created the virtual network and subnets that I had planned during Phase 1. I also worked with Network Security Groups and learned how Azure controls traffic between different parts of a network.
 
-I'll then explore Network Security Groups (NSGs), network traffic rules, and connectivity troubleshooting.
+Here's what I completed:
 
-**Current project progress: 3 of 12 phases completed (25%).**
+- Created `vnet-smakonnect-lab-01` in Canada Central with the address space `10.10.0.0/16`.
+- Configured four subnets for Management, Servers, Applications, and Private Endpoints.
+- Created `nsg-smakonnect-servers-01` to control traffic for the Servers subnet.
+- Added a custom inbound rule called `Allow-RDP-From-Management` using TCP port 3389 and priority 300.
+- Associated the NSG with `snet-servers`.
+- Reviewed the default inbound and outbound NSG rules.
+- Learned how NSG rule priorities work and why lower priority numbers are evaluated first.
+- Practiced deciding where to associate an NSG based on the resources I want to protect.
+- Verified the VNet address space, subnet ranges, NSG association, and security rules.
 
-**Next up:** Phase 4 — Azure Virtual Networking and Connectivity.
+One of the biggest things I learned was the difference between **where an NSG is associated** and the **source and destination addresses used in its rules**.
+
+I now understand that the decision depends on which resources I want to protect and whether I'm controlling inbound or outbound traffic.
+
+I also learned that an Allow rule does not automatically block other traffic. I need to understand the default NSG rules and rule priorities before assuming a network is restricted.
+
+I completed the phase without deploying virtual machines or other unnecessary paid networking resources.
+
+The next step is to deploy Windows Server and Linux virtual machines and begin testing actual network connectivity.
+
+**Phase 4 documentation:** [Azure Virtual Networking and Connectivity](phase-04-azure-virtual-networking/azure-virtual-networking-configuration.md)
+
+---
+
+**Current project progress: 4 of 12 phases completed (33%).**
+
+**Next up:** Phase 5 — Windows Server and Linux Virtual Machine Administration.
 
 ---
 
