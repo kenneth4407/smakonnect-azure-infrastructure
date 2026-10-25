@@ -40,7 +40,7 @@ I chose this private IP address range because it provides enough space to create
 
 ### Virtual Network Overview
 
-![Smakonnect Virtual Network Overview](phase-04-azure-virtual-networking/screenshots/01-vnet-overview.png)
+![Smakonnect Virtual Network Overview](screenshots/01-vnet-overview.png)
 
 ## 3. Configuring the Subnets
 
@@ -61,7 +61,7 @@ One important thing I learned is that **creating separate subnets does not autom
 
 ### Virtual Network Subnets
 
-![Smakonnect Virtual Network Subnets](phase-04-azure-virtual-networking/screenshots/02-vnet-subnets.png.png)
+![Smakonnect Virtual Network Subnets](screenshots/02-vnet-subnets.png.png)
 
 ## 4. Creating a Network Security Group
 
@@ -85,7 +85,7 @@ This helped me understand that:
 
 ### Network Security Group Overview
 
-![Smakonnect Network Security Group Overview](phase-04-azure-virtual-networking/screenshots/03-nsg-overview.png.png)
+![Smakonnect Network Security Group Overview](screenshots/03-nsg-overview.png.png)
 
 ## 5. Configuring an Inbound RDP Security Rule
 
@@ -118,7 +118,7 @@ To enforce stricter access, I would need to configure additional security rules 
 
 ### Inbound Security Rule
 
-![Smakonnect NSG Inbound Security Rules](phase-04-azure-virtual-networking/screenshots/04-nsg-inbound-rules.png)
+![Smakonnect NSG Inbound Security Rules](screenshots/04-nsg-inbound-rules.png)
 
 ## 6. Associating the NSG with the Servers Subnet
 
@@ -138,7 +138,7 @@ I also learned that an NSG can be associated with a network interface when more 
 
 ### NSG Subnet Association
 
-![Smakonnect NSG Servers Subnet Association](phase-04-azure-virtual-networking/screenshots/05-nsg-subnet-association.png)
+![Smakonnect NSG Servers Subnet Association](screenshots/05-nsg-subnet-association.png)
 
 ## 7. Understanding NSG Rule Priorities
 
