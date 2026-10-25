@@ -1,143 +1,164 @@
-# Smakonnect Tech Innovation | Azure Infrastructure Project
+# Smakonnect Tech Innovation | Azure Infrastructure Administration
 
-### Building and Managing an Azure Environment — AZ-104 Hands-On Project
+### Microsoft Azure Infrastructure Portfolio | AZ-104 | Systems Administration | Cloud Operations
 
-## About This Project
+## Project Overview
 
-I'm working on this project to build my practical skills in Microsoft Azure and systems administration.
+This repository documents the design, deployment, administration, and ongoing improvement of a Microsoft Azure infrastructure environment built around a fictional organization, **Smakonnect Tech Innovation**.
 
-I've been studying Azure administration, and I wanted to do more than just read documentation or watch tutorials. I decided to build an environment where I could practice the kind of work an Azure Administrator or IT Support Engineer might handle on the job.
+I developed this project to maintain a practical record of my work with Azure infrastructure and to demonstrate the technical skills involved in cloud and systems administration.
 
-For this project, I'm using **Smakonnect Tech Innovation** as a sample company that needs its IT infrastructure set up and managed in Azure.
+The environment brings together several areas of infrastructure management, including resource governance, role-based access control, virtual networking, Windows and Linux administration, storage, monitoring, security, and troubleshooting.
 
-I'll be working through everything in stages, from planning the environment to deploying servers, configuring networking, managing storage, monitoring resources, and troubleshooting problems.
+Rather than treating each Azure service as a separate exercise, I am building an interconnected environment where the resources support realistic administrative and operational scenarios.
 
-I'm also documenting what I do along the way, including things that don't work the first time and how I fix them.
+My focus is on the decisions behind each configuration, how services work together, and how I investigate and resolve issues when something does not behave as expected.
 
-This project is part of my preparation for the **Microsoft AZ-104 certification** and my goal of working in cloud and systems administration.
+The repository also serves as an ongoing technical reference as I continue developing my Azure administration skills and preparing for the Microsoft AZ-104 certification.
 
-## What I Want to Achieve
+> **Environment:** This is a self-managed technical lab based on a simulated business environment. It is not presented as a production deployment.
 
-By the end of this project, I want to be comfortable with:
+---
 
-- Setting up and managing Azure resources.
-- Creating virtual networks and configuring subnets.
-- Deploying and managing Windows Server and Linux virtual machines.
-- Working with Azure Storage and controlling access to data.
-- Understanding Azure permissions and security.
-- Monitoring resources and investigating issues.
-- Using PowerShell, Azure CLI, and Bicep to automate tasks.
-- Troubleshooting common problems that come up in an Azure environment.
-- Writing clear technical documentation that another IT administrator could follow.
+## Technical Focus
 
-I also want to understand *why* certain configurations are used, instead of just memorizing steps.
+The project covers infrastructure responsibilities commonly associated with Azure Administrator, Systems Administrator, Cloud Support, and Managed Service Provider (MSP) roles.
 
-## The Scenario
-
-For this lab, I'm acting as the Azure Administrator for Smakonnect Tech Innovation.
-
-The company needs a basic Azure environment that can support servers, applications, and file storage.
-
-My responsibility is to plan the environment, build it, secure it, and make sure it can be monitored and maintained.
-
-This is a simulated company environment, not a live production system.
-
-## Tools and Technologies
-
-I'll be working with the following technologies throughout the project:
-
-| Area | Tools and Services |
+| Area | Technologies and Responsibilities |
 |---|---|
-| Cloud | Microsoft Azure |
-| Networking | Virtual Networks, Subnets, NSGs, DNS |
-| Servers | Windows Server, Ubuntu Linux |
-| Storage | Azure Blob Storage, Storage Accounts |
-| Security | Azure RBAC, Azure Policy |
-| Monitoring | Azure Monitor, Activity Logs, Log Analytics |
+| Azure Administration | Resource groups, subscriptions, resource deployment, configuration management |
+| Governance | Resource tagging, Azure Policy, resource locks, cost management |
+| Identity and Access | Azure RBAC, role assignments, permission scopes, access troubleshooting |
+| Networking | Virtual Networks, subnet design, NSGs, private IP addressing, connectivity testing |
+| Windows Administration | Windows Server 2022, RDP, services, Event Viewer, Windows Firewall |
+| Linux Administration | Ubuntu Server 24.04, SSH, systemd, logs, network diagnostics |
+| Application Infrastructure | Nginx, internal HTTP hosting, service connectivity |
+| Storage | Azure Storage Accounts, Blob Storage, Azure Files, access management |
+| Monitoring | Azure Monitor, Activity Logs, alerts, Log Analytics |
 | Automation | PowerShell, Azure CLI, Bicep |
-| Documentation | GitHub, Markdown, Network Diagrams |
+| Operations | Troubleshooting, security reviews, documentation, cost optimization |
 
-Some of these are planned for later phases and haven't been deployed yet.
+Some technologies listed above are part of upcoming project phases and have not yet been implemented.
 
-## My Azure Lab Setup
+---
 
-I'm using a school-provided **Visual Studio Professional Azure subscription** for hands-on learning.
+## Infrastructure Scenario
 
-I've confirmed that I have the Owner role on the Azure subscription, which gives me access to manage Azure resources within the subscription's limits.
+Smakonnect Tech Innovation is a simulated organization requiring a structured Azure environment to support internal servers, applications, and shared data.
 
-However, the Microsoft Entra tenant is managed by my school, so I don't have access to all the identity administration features. During Phase 3, I focused on Azure RBAC and documented the directory access limitation instead of attempting changes outside my permissions.
+For this project, I am responsible for planning and administering the environment, establishing appropriate access controls, deploying infrastructure resources, validating connectivity, and documenting operational decisions.
 
-I'm also working with limited Azure credits, so I need to pay attention to costs and clean up resources when I'm finished with them.
+The environment is designed to support several practical objectives:
 
-## Azure Network Setup
+- Maintain an organized and manageable Azure resource structure.
+- Separate infrastructure workloads through planned subnet allocation.
+- Apply governance and network security controls.
+- Support both Windows Server and Linux workloads.
+- Enable private communication between Azure resources.
+- Provide infrastructure for internal application hosting.
+- Introduce storage, monitoring, and recovery capabilities.
+- Investigate operational issues using appropriate diagnostic tools.
+- Manage resource costs within a limited lab budget.
 
-I deployed my virtual network in **Canada Central** during Phase 4.
+The project is delivered in phases, allowing each completed component to become part of the wider infrastructure.
 
-The virtual network is:
+---
 
-`vnet-smakonnect-lab-01`
+## Azure Environment
 
-Address space: `10.10.0.0/16`
+| Configuration | Details |
+|---|---|
+| Cloud platform | Microsoft Azure |
+| Subscription | Visual Studio Professional Azure subscription |
+| Primary region | Canada Central |
+| Resource group | `rg-smakonnect-lab-01` |
+| Virtual network | `vnet-smakonnect-lab-01` |
+| VNet address space | `10.10.0.0/16` |
+| Server subnet | `snet-servers` — `10.10.2.0/24` |
+| Server network security group | `nsg-smakonnect-servers-01` |
+| Windows VM | `vm-smakonnect-win-01` |
+| Linux VM | `vm-smakonnect-linux-01` |
 
-| Subnet | IP Range | What I'll Use It For |
+### Governance and Resource Management
+
+The environment includes a consistent resource organization and governance approach.
+
+I configured resource tags to identify the project, environment, department, and management ownership.
+
+I also established a monthly Azure budget with alerts at 50%, 80%, and 100% of the configured threshold.
+
+Additional governance work includes reviewing Azure Policy assignments, configuring a resource group Delete lock, and investigating Azure RBAC permissions.
+
+The subscription is associated with a school-managed Microsoft Entra tenant. While I have the Owner role at subscription scope, tenant-level identity administration is restricted.
+
+I documented this limitation during the access management phase and kept the implementation within the permissions available to my account.
+
+---
+
+## Network Architecture
+
+The virtual network was designed with separate address ranges for management, server, application, and private endpoint workloads.
+
+| Subnet | Address Range | Intended Purpose |
 |---|---|---|
-| Management | `10.10.1.0/24` | Administration and management |
-| Servers | `10.10.2.0/24` | Windows Server and Linux virtual machines |
-| Applications | `10.10.3.0/24` | Application workloads |
-| Private Endpoints | `10.10.4.0/24` | Private connections to Azure services |
+| `snet-management` | `10.10.1.0/24` | Administrative and management workloads |
+| `snet-servers` | `10.10.2.0/24` | Windows and Linux servers |
+| `snet-applications` | `10.10.3.0/24` | Application workloads |
+| `snet-private-endpoints` | `10.10.4.0/24` | Private connectivity to Azure services |
 
-I chose separate subnets so I can organize different workloads and apply network security rules as the environment grows.
+This layout provides a foundation for organizing workloads and applying more specific network controls as the project expands.
 
-I also created a Network Security Group called `nsg-smakonnect-servers-01` and associated it with the Servers subnet.
+The Servers subnet is associated with `nsg-smakonnect-servers-01`.
 
-The NSG includes a custom inbound rule allowing RDP traffic from the Management subnet to the Servers subnet on TCP port 3389.
+The NSG contains a custom rule allowing RDP from the Management subnet, along with temporary source-restricted administrative access rules used during the VM deployment and testing phase.
 
-This was an important part of my learning because I got to understand how inbound and outbound traffic works, how NSG rule priorities are evaluated, and how to decide which subnet an NSG should protect.
+I also reviewed Azure's default NSG rules to understand how traffic is evaluated and why an Allow rule does not automatically isolate a workload.
 
-The network configuration has been verified, but I haven't tested live connectivity yet because the virtual machines will be deployed in Phase 5.
+### Current Server Architecture
 
-## Virtual Machines
+Two virtual machines are deployed in the Servers subnet.
 
-I plan to work with two virtual machines:
+| Server | Operating System | Private IP | Primary Function |
+|---|---|---|---|
+| `vm-smakonnect-win-01` | Windows Server 2022 | `10.10.2.4` | Windows administration and internal connectivity testing |
+| `vm-smakonnect-linux-01` | Ubuntu Server 24.04 LTS | `10.10.2.5` | Linux administration and Nginx web hosting |
 
-**Windows Server:** I'll use this to practice server administration, remote access, disk management, monitoring, and troubleshooting.
+Both servers communicate over the Azure private network.
 
-**Ubuntu Linux:** I'll use this to practice SSH, Linux administration, networking, and basic application hosting.
+The Ubuntu VM hosts a Smakonnect internal website using Nginx. I verified that the Windows VM can access the application through Ubuntu's private IP address on TCP port 80.
 
-Because my Azure credits are limited, I'll deploy the servers one at a time instead of leaving both running.
+I also tested access from outside the virtual network and confirmed that the public HTTP connection timed out, consistent with the configured NSG restrictions.
 
-## Storage and Monitoring
+This deployment provides a working foundation for the storage, networking, monitoring, and troubleshooting phases that follow.
 
-For storage, I plan to use Azure Blob Storage with private containers, locally redundant storage (LRS), and soft delete.
-
-I want to practice uploading files, managing access, and recovering accidentally deleted data.
-
-For monitoring, I'll start with Azure Monitor metrics and Activity Logs. Later, I'll explore alerts, Log Analytics, and KQL where my subscription budget allows.
+---
 
 ## Project Roadmap
 
-I'll complete the project in 12 phases and update this repository as I go.
+The project is organized into 12 phases covering Azure infrastructure deployment, administration, security, and operations.
 
-| Phase | What I'll Be Working On | Status |
+**Current progress: 5 of 12 phases completed (42%).**
+
+| Phase | Scope | Status |
 |---|---|---|
 | 01 | Azure Subscription Assessment and Architecture Planning | Completed |
 | 02 | Resource Groups, Tags, and Azure Governance | Completed |
 | 03 | Azure RBAC and Access Management | Completed |
 | 04 | Virtual Networks, Subnets, and Network Security | Completed |
-| 05 | Windows Server and Linux Virtual Machines | Not Started |
-| 06 | Azure Storage and Data Protection | Not Started |
-| 07 | Advanced Networking and Hybrid Connectivity | Not Started |
-| 08 | Azure Monitoring and Troubleshooting | Not Started |
-| 09 | Azure Backup and Disaster Recovery | Not Started |
-| 10 | PowerShell, Azure CLI, and Bicep | Not Started |
-| 11 | IT Support and MSP Troubleshooting Scenarios | Not Started |
-| 12 | Final Project Review and AZ-104 Interview Preparation | Not Started |
+| 05 | Windows Server and Linux Virtual Machines | Completed |
+| 06 | Azure Storage and Data Protection | In Progress |
+| 07 | Advanced Networking and Hybrid Connectivity | Planned |
+| 08 | Azure Monitoring and Troubleshooting | Planned |
+| 09 | Azure Backup and Disaster Recovery | Planned |
+| 10 | PowerShell, Azure CLI, and Bicep | Planned |
+| 11 | IT Support and MSP Troubleshooting Scenarios | Planned |
+| 12 | Final Project Review and AZ-104 Interview Preparation | Planned |
+
+---
 
 ## Phase Documentation
 
-I've organized the project documentation by phase so I can keep track of the work I've completed and refer back to it when reviewing Azure concepts or preparing for interviews.
-
-Each completed phase links to its documentation in this repository.
+Each completed phase includes technical documentation covering the implementation, configuration decisions, validation, troubleshooting, and supporting evidence.
 
 | Phase | Documentation | Status |
 |---|---|---|
@@ -145,122 +166,267 @@ Each completed phase links to its documentation in this repository.
 | 02 — Azure Governance and Resource Organization | [View Documentation](phase-02-azure-governance) | Completed |
 | 03 — Azure RBAC and Access Management | [View Documentation](phase-03-azure-rbac/azure-rbac-access-management.md) | Completed |
 | 04 — Azure Virtual Networking and Connectivity | [View Documentation](phase-04-azure-virtual-networking/azure-virtual-networking-configuration.md) | Completed |
-| 05 — Windows Server and Linux Virtual Machines | Coming soon | Not Started |
-| 06 — Azure Storage and Data Protection | Coming soon | Not Started |
-| 07 — Advanced Networking and Hybrid Connectivity | Coming soon | Not Started |
-| 08 — Azure Monitoring and Troubleshooting | Coming soon | Not Started |
-| 09 — Azure Backup and Disaster Recovery | Coming soon | Not Started |
-| 10 — PowerShell, Azure CLI, and Bicep | Coming soon | Not Started |
-| 11 — IT Support and MSP Troubleshooting Scenarios | Coming soon | Not Started |
-| 12 — Final Project Review and AZ-104 Interview Preparation | Coming soon | Not Started |
-
-As I complete each phase, I'll update its status and replace **Coming soon** with a link to the corresponding documentation.
-
-## How I'm Documenting My Work
-
-After each phase, I'll add documentation showing:
-
-- What I was trying to accomplish.
-- The steps I followed.
-- Screenshots or command outputs showing the results.
-- Problems I ran into and how I solved them.
-- What I learned and what I would do differently.
-
-I want the documentation to be useful both as a record of my learning and as something I can refer back to when preparing for technical interviews.
-
-## Cost and Security
-
-Since this is a student lab, I have to be careful with my Azure credits.
-
-I've configured a monthly Azure budget with spending alerts to help me monitor costs. I understand that budget alerts do not automatically stop Azure charges.
-
-My plan is to check costs before deploying resources, avoid leaving virtual machines running unnecessarily, and remove resources I no longer need.
-
-I'll also make sure not to upload passwords, access keys, personal information, or sensitive Azure account details to GitHub.
-
-## Current Progress
-
-I've completed the first four phases of the project, covering environment assessment, Azure governance, Azure RBAC, and Azure virtual networking.
-
-### Phase 1 — Environment Assessment and Architecture Planning
-
-- Checked my Azure subscription and available credits.
-- Confirmed my Azure subscription Owner role.
-- Reviewed existing Azure Policy assignments.
-- Checked the available regional compute quota.
-- Planned the virtual network and subnet layout.
-- Decided how I'll deploy my Windows and Linux virtual machines.
-- Planned the storage, monitoring, and cost-management approach.
-
-### Phase 2 — Azure Governance and Resource Organization
-
-- Created the `rg-smakonnect-lab-01` resource group in Canada Central.
-- Applied resource tags for project identification, ownership, and environment tracking.
-- Configured a monthly Azure budget with spending alerts at 50%, 80%, and 100%.
-- Applied a Delete lock to help protect the resource group from accidental deletion.
-- Assigned an Azure Policy requiring the `Environment` tag, with enforcement disabled for the lab.
-- Verified the governance settings in the Azure Portal.
-
-These activities helped me understand how Azure administrators organize resources, monitor spending, and apply governance controls before deploying infrastructure.
-
-### Phase 3 — Azure RBAC and Access Management
-
-In this phase, I focused on understanding how Azure administrators manage permissions and investigate access-related issues.
-
-- Verified that my Azure account has the **Owner** role inherited from the subscription.
-- Reviewed the built-in **Owner, Contributor, and Reader** roles and compared their permissions.
-- Learned how Azure RBAC uses security principals, role definitions, and scopes to control access.
-- Opened the **Add role assignment** wizard and explored how the Reader role would be assigned at resource group scope.
-- Reviewed **Active and Eligible** assignment types and learned how eligible permissions can be activated through Privileged Identity Management (PIM).
-- Exited the role assignment wizard without creating any new assignments.
-- Reviewed the resource group's **Role assignments** and **Activity log** sections.
-- Practiced an RBAC troubleshooting scenario involving an IT support technician who could view Azure resources but could not modify them.
-- Documented the Microsoft Entra ID access restriction associated with my school-managed tenant.
-
-One important lesson from this phase was that **Azure subscription Owner permissions and Microsoft Entra tenant administrator permissions are different**.
-
-I also learned why the principle of least privilege matters and how role assignments, inheritance, and scope affect access to Azure resources.
-
-I completed the phase without creating new users or changing existing role assignments.
-
-**Phase 3 documentation:** [Azure RBAC and Access Management](phase-03-azure-rbac/azure-rbac-access-management.md)
-
-### Phase 4 — Azure Virtual Networking and Connectivity
-
-In this phase, I moved from planning the network to actually building it in Azure.
-
-I created the virtual network and subnets that I had planned during Phase 1. I also worked with Network Security Groups and learned how Azure controls traffic between different parts of a network.
-
-Here's what I completed:
-
-- Created `vnet-smakonnect-lab-01` in Canada Central with the address space `10.10.0.0/16`.
-- Configured four subnets for Management, Servers, Applications, and Private Endpoints.
-- Created `nsg-smakonnect-servers-01` to control traffic for the Servers subnet.
-- Added a custom inbound rule called `Allow-RDP-From-Management` using TCP port 3389 and priority 300.
-- Associated the NSG with `snet-servers`.
-- Reviewed the default inbound and outbound NSG rules.
-- Learned how NSG rule priorities work and why lower priority numbers are evaluated first.
-- Practiced deciding where to associate an NSG based on the resources I want to protect.
-- Verified the VNet address space, subnet ranges, NSG association, and security rules.
-
-One of the biggest things I learned was the difference between **where an NSG is associated** and the **source and destination addresses used in its rules**.
-
-I now understand that the decision depends on which resources I want to protect and whether I'm controlling inbound or outbound traffic.
-
-I also learned that an Allow rule does not automatically block other traffic. I need to understand the default NSG rules and rule priorities before assuming a network is restricted.
-
-I completed the phase without deploying virtual machines or other unnecessary paid networking resources.
-
-The next step is to deploy Windows Server and Linux virtual machines and begin testing actual network connectivity.
-
-**Phase 4 documentation:** [Azure Virtual Networking and Connectivity](phase-04-azure-virtual-networking/azure-virtual-networking-configuration.md)
+| 05 — Windows Server and Linux Virtual Machines | [View Documentation](phase-05-azure-virtual-machines/azure-virtual-machines-deployment.md) | Completed |
+| 06 — Azure Storage and Data Protection | Documentation in progress | In Progress |
+| 07 — Advanced Networking and Hybrid Connectivity | Planned | Not Started |
+| 08 — Azure Monitoring and Troubleshooting | Planned | Not Started |
+| 09 — Azure Backup and Disaster Recovery | Planned | Not Started |
+| 10 — PowerShell, Azure CLI, and Bicep | Planned | Not Started |
+| 11 — IT Support and MSP Troubleshooting Scenarios | Planned | Not Started |
+| 12 — Final Project Review and AZ-104 Interview Preparation | Planned | Not Started |
 
 ---
 
-**Current project progress: 4 of 12 phases completed (33%).**
+## Implementation Highlights
 
-**Next up:** Phase 5 — Windows Server and Linux Virtual Machine Administration.
+### Phase 01 — Azure Environment Assessment and Architecture Planning
+
+I began by assessing the available Azure environment and establishing the requirements for the infrastructure.
+
+The work included:
+
+- Reviewing the subscription, available credits, and regional resource quotas.
+- Verifying subscription-level administrative permissions.
+- Reviewing existing Azure Policy assignments.
+- Planning the resource organization and naming conventions.
+- Designing the virtual network address space and subnet structure.
+- Evaluating VM deployment options and their cost implications.
+- Establishing an implementation roadmap covering governance, networking, compute, storage, monitoring, and automation.
+
+This phase provided the technical foundation for the deployments that followed.
+
+### Phase 02 — Azure Governance and Resource Organization
+
+I configured the core resource management controls for the Smakonnect environment.
+
+Key activities included:
+
+- Creating `rg-smakonnect-lab-01` in Canada Central.
+- Applying standardized tags for resource identification and organization.
+- Configuring a monthly Azure budget with alerts at 50%, 80%, and 100%.
+- Applying a resource group Delete lock as protection against accidental deletion.
+- Assigning an Azure Policy to audit the presence of the `Environment` tag.
+- Reviewing the resulting governance configuration in the Azure Portal.
+
+The Policy assignment was configured without enforcement, allowing me to examine policy behavior without introducing deployment restrictions during the lab.
+
+This phase established a more structured approach to managing Azure resources, controlling costs, and reducing administrative risk.
+
+### Phase 03 — Azure RBAC and Access Management
+
+This phase focused on subscription and resource-level authorization.
+
+I investigated how Azure RBAC uses role definitions, security principals, and assignment scopes to control administrative access.
+
+My work included:
+
+- Verifying the Owner role assigned at subscription scope.
+- Comparing the permissions associated with Owner, Contributor, and Reader.
+- Reviewing role assignment inheritance and resource group scope.
+- Exploring the role assignment workflow without creating unnecessary assignments.
+- Examining the relationship between active and eligible role assignments.
+- Reviewing Activity Logs and access-related information.
+- Working through a troubleshooting scenario involving a user who could view resources but could not modify them.
+
+I also investigated the distinction between Azure RBAC permissions and Microsoft Entra tenant administration.
+
+The school-managed tenant restricted certain identity administration operations, so I documented the limitation and continued with the Azure RBAC scope available to me.
+
+**Technical takeaway:** Subscription ownership does not automatically provide tenant-level administrative privileges. Effective access troubleshooting requires identifying the relevant scope, role assignment, and service boundary.
+
+[Read Phase 03 Documentation](phase-03-azure-rbac/azure-rbac-access-management.md)
+
+### Phase 04 — Azure Virtual Networking and Security
+
+I implemented the network architecture planned during the initial assessment.
+
+The deployment included:
+
+- Creating `vnet-smakonnect-lab-01` with the address space `10.10.0.0/16`.
+- Configuring Management, Servers, Applications, and Private Endpoints subnets.
+- Creating `nsg-smakonnect-servers-01`.
+- Associating the NSG with the Servers subnet.
+- Configuring an inbound RDP rule from the Management subnet.
+- Reviewing NSG rule priorities, default rules, and traffic evaluation.
+- Validating the address ranges, subnet configuration, and NSG association.
+
+One important design consideration was understanding that an NSG association determines where rules are applied, while each rule's source and destination settings determine which traffic it matches.
+
+I also verified that allowing a specific connection does not automatically deny all other internal connections.
+
+This network became the foundation for the Windows and Linux workloads deployed in Phase 5.
+
+[Read Phase 04 Documentation](phase-04-azure-virtual-networking/azure-virtual-networking-configuration.md)
+
+### Phase 05 — Windows Server and Linux Virtual Machines
+
+In Phase 5, I deployed two virtual machines into the existing Servers subnet and used them to validate operating system administration, private connectivity, and internal application hosting.
+
+**Windows Server deployment**
+
+I deployed Windows Server 2022 Datacenter: Azure Edition on a `Standard_B4als_v2` VM with a Standard SSD OS disk and Trusted Launch security.
+
+I connected through RDP and performed administration tasks using Server Manager, Task Manager, Event Viewer, Windows services, Windows Firewall, and PowerShell.
+
+**Ubuntu Linux deployment**
+
+I deployed Ubuntu Server 24.04 LTS on a `Standard_B2als_v2` VM with a 30 GiB Standard SSD OS disk and Trusted Launch.
+
+I configured SSH public-key authentication and administered the server through macOS Terminal.
+
+I used Linux commands to inspect network interfaces, routing, storage, CPU, memory, running services, and system logs.
+
+**Private connectivity and troubleshooting**
+
+Both VMs were deployed into `snet-servers`:
+
+- Windows Server: `10.10.2.4`
+- Ubuntu Server: `10.10.2.5`
+
+During connectivity testing, I encountered an issue where Ubuntu could not ping Windows, even though Windows could communicate with Ubuntu.
+
+I investigated the problem by checking Ubuntu's routing table, testing TCP connectivity, confirming SSH service availability, and verifying outbound HTTPS access.
+
+The issue was traced to Windows Firewall filtering inbound ICMP echo requests.
+
+I created a temporary rule restricted to Ubuntu's private IP, confirmed that ping then succeeded, and removed the diagnostic rule afterward.
+
+**Internal application hosting**
+
+I installed Nginx on Ubuntu and configured a static internal website for Smakonnect Tech Innovation.
+
+I validated that:
+
+- Nginx was active and listening on TCP port 80.
+- Ubuntu returned a successful HTTP response locally.
+- Windows could establish a TCP connection to Ubuntu on port 80.
+- Microsoft Edge on Windows could display the website using `http://10.10.2.5`.
+
+**Network security validation**
+
+I reviewed the Servers subnet NSG and confirmed that no custom inbound rule allowed public HTTP traffic.
+
+An HTTP connection attempt from my Mac to Ubuntu's public IP timed out, consistent with the intended NSG restrictions.
+
+This phase brought together compute, operating system administration, private networking, service configuration, and practical troubleshooting in one working environment.
+
+[Read Phase 05 Documentation and View Screenshots](phase-05-azure-virtual-machines/azure-virtual-machines-deployment.md)
 
 ---
 
-*This is an ongoing hands-on learning project. I'll update the repository as I complete each phase and gain more practical experience.*
+## Troubleshooting and Operational Experience
+
+One of the main purposes of this repository is to demonstrate how I approach infrastructure issues, not just successful deployments.
+
+The Phase 5 connectivity problem is a good example.
+
+**Issue:** Ubuntu could not ping Windows over the private Azure network.
+
+**Investigation:** I checked Linux routing, verified TCP connectivity, confirmed that SSH was running, and tested external HTTPS access.
+
+**Finding:** Private networking was functioning, but Windows Firewall was preventing inbound ICMP echo requests.
+
+**Resolution:** I applied a temporary, source-restricted firewall rule, retested connectivity successfully, and removed the rule after confirming the cause.
+
+**Operational lesson:** Troubleshooting should isolate the failing component rather than changing multiple configurations at once. A failed ICMP test does not necessarily indicate a routing or server availability problem.
+
+As the project develops, I will continue documenting relevant configuration issues, diagnostic commands, findings, and resolutions.
+
+---
+
+## Security and Operational Considerations
+
+Security is part of the infrastructure design and validation process throughout this project.
+
+The controls and practices addressed so far include:
+
+- Resource organization and governance through tags, Azure Policy, and resource locks.
+- Azure RBAC review and permission-scope analysis.
+- Network traffic management through subnet-associated NSGs.
+- Restricted temporary RDP and SSH access for administration.
+- SSH public-key authentication for Ubuntu.
+- Guest operating system firewall troubleshooting.
+- Private IP communication between servers.
+- Validation of internal website access and public HTTP restrictions.
+- Awareness of cost and resource lifecycle management.
+
+The current environment is a lab, so some administrative access methods are intentionally temporary.
+
+Future hardening work may include Azure Bastion, private connectivity, tighter destination-specific NSG rules, HTTPS, additional monitoring, and improved automation.
+
+These are planned improvements rather than features already deployed.
+
+---
+
+## Cost Management
+
+The environment runs under a limited-credit Azure subscription, so resource selection and operating costs are part of my deployment decisions.
+
+I use appropriately sized virtual machines, Standard SSD storage, and Azure budget alerts to help control spending.
+
+VM automatic shutdown has also been configured, and I stop and deallocate compute resources when they are not required for active lab work.
+
+I understand that deallocating a VM stops compute billing but does not necessarily eliminate charges for attached disks, public IP addresses, and other retained resources.
+
+The objective is to maintain a useful working environment without provisioning unnecessary services.
+
+---
+
+## Documentation Approach
+
+I maintain this repository as an ongoing technical record.
+
+Each phase is documented with an emphasis on:
+
+- Infrastructure requirements and objectives.
+- Resources deployed and their configurations.
+- Technical decisions and the reasoning behind them.
+- Validation commands and observed results.
+- Issues encountered and troubleshooting performed.
+- Security and cost considerations.
+- Screenshots and supporting evidence.
+- Improvements identified for future implementation.
+
+I aim to keep the documentation clear enough for another administrator to understand the environment and follow the technical decisions.
+
+Screenshots and configuration details are included where they provide useful evidence, while credentials, private keys, and other sensitive information are excluded.
+
+---
+
+## Current Status and Next Steps
+
+**Completed: 5 of 12 phases — 42%**
+
+The environment currently includes:
+
+- An established Azure resource group and governance configuration.
+- A four-subnet virtual network.
+- A Network Security Group associated with the Servers subnet.
+- A deployed Windows Server 2022 virtual machine.
+- A deployed Ubuntu Server 24.04 virtual machine.
+- Validated private connectivity between the servers.
+- An Nginx-hosted internal website accessible from Windows.
+- Documented firewall troubleshooting and network security testing.
+
+### Current Focus — Phase 06: Azure Storage and Data Protection
+
+The next phase will extend the environment with Azure Storage services.
+
+Planned work includes storage account configuration, Blob Storage, Azure Files, access management, data protection, and connectivity testing from existing infrastructure.
+
+Later phases will build on this foundation with advanced networking, monitoring, backup and recovery, automation, and operational troubleshooting scenarios.
+
+---
+
+## Portfolio Purpose
+
+This repository is a practical demonstration of how I approach Azure infrastructure administration.
+
+It brings together resource deployment, systems administration, network configuration, security controls, service validation, troubleshooting, and technical documentation.
+
+The goal is to maintain a credible record of implemented work that I can discuss in technical interviews, use as a reference for future projects, and continue improving as Azure services and operational practices evolve.
+
+**Project:** Smakonnect Tech Innovation — Azure Infrastructure Administration  
+**Focus:** Azure Administrator | Systems Administrator | Cloud Support | MSP Operations  
+**Status:** Active development — Phase 06 in progress
+
