@@ -1,14 +1,14 @@
 # Smakonnect Tech Innovation | Azure Infrastructure Administration
 
-**Hands-on Microsoft Azure portfolio | AZ-104 | Systems Administration | Cloud Operations | MSP Support**
+**Hands-on Microsoft Azure portfolio | Systems Administration | Cloud Operations | MSP Support**
 
-**Project status:** Active development · **6 of 12 phases completed (50%)** · **Next: Advanced Azure Networking**
+**Project status:** Active development · **7 of 12 phases completed (58%)** · **Next: Monitoring and Diagnostics**
 
 ## At a Glance
 
 I designed and administer a connected Microsoft Azure lab for **Smakonnect Tech Innovation**, a fictional organization. The project demonstrates how I approach infrastructure work: plan the environment, deploy services, apply access and security controls, validate functionality, troubleshoot failures, and document the outcome.
 
-The environment currently includes **Azure governance and RBAC, a four-subnet virtual network, Windows Server 2022, Ubuntu Server 24.04, an internal Nginx website, Azure Blob Storage, and Azure Files**. Each completed phase includes technical documentation and screenshots.
+The environment currently includes **Azure governance and RBAC, a four-subnet virtual network, Windows Server 2022, Ubuntu Server 24.04, an internal Nginx website, Azure Blob Storage, and Azure Files**. I have also tested **Azure-provided DNS, effective routing, NSG rule evaluation, and Network Watcher IP flow verification**. Each completed phase includes technical documentation and screenshots.
 
 > **Scope:** This is a self-managed technical lab, not a production deployment. Implemented controls and verified outcomes are distinguished from planned improvements.
 
@@ -21,6 +21,8 @@ The environment currently includes **Azure governance and RBAC, a four-subnet vi
 | **Governance** | Resource organization, standardized tags, Azure Policy audit, resource group Delete lock, and budget alerts |
 | **Identity & access** | Azure RBAC scope and inheritance review; Blob data-plane role assignment; SAS authorization troubleshooting |
 | **Networking** | `10.10.0.0/16` VNet, four subnets, subnet-associated NSG, source-restricted administration, private connectivity tests |
+| **DNS & routing** | Azure-provided DNS, private VM hostname resolution, Windows hosts-file troubleshooting, Azure effective routes, Windows routing table inspection |
+| **Network diagnostics** | Network Watcher IP flow verify, temporary NSG deny-rule simulation, connectivity recovery, public HTTP denial verification |
 | **Windows & Linux** | Windows Server 2022 administration over RDP; Ubuntu 24.04 administration over SSH; firewall, service, and network diagnostics |
 | **Internal application** | Nginx website hosted on Ubuntu and accessed from Windows over the private network |
 | **Storage** | Private Blob container, read-only User Delegation SAS, Azure Files SMB share mapped to Windows, soft-delete recovery |
@@ -53,6 +55,16 @@ Created `smakonnect-it-share` and mapped it to Windows Server as drive `Z:`. Con
 
 [Explore Azure Files and data protection](phase-06-azure-storage/azure-storage-administration.md)
 
+### 04 — Diagnosed and Recovered from an NSG-Blocked Connection
+
+Simulated an internal application outage by creating a temporary NSG rule denying TCP port 80 from the Windows VM (`10.10.2.4`) to the Ubuntu Nginx server (`10.10.2.5`). Confirmed the connection failed, used **Network Watcher IP flow verify** to identify the matching deny rule, removed the temporary rule, and verified that HTTP connectivity was restored.
+
+Also inspected **Azure effective routes and Windows routing tables**, diagnosed an intentionally incorrect Windows hosts-file entry, verified public HTTP was denied by the NSG, and restricted an existing SSH allow rule to **TCP port 22**.
+
+**Why it matters:** The exercise demonstrates a repeatable troubleshooting method: reproduce the symptom, isolate the control responsible, remediate, and retest—without confusing DNS, routing, and NSG failures.
+
+[Explore Phase 7 networking and troubleshooting](phase-07-advanced-networking/azure-advanced-networking-troubleshooting.md)
+
 ## Troubleshooting in Practice
 
 | Issue | Investigation and outcome |
@@ -60,6 +72,9 @@ Created `smakonnect-it-share` and mapped it to Windows Server as drive `Z:`. Con
 | **Ubuntu could not ping Windows** | Checked routing and TCP connectivity, then isolated the issue to Windows Firewall blocking inbound ICMP. A temporary source-restricted rule confirmed the diagnosis. |
 | **Blob SAS returned `AuthorizationPermissionMismatch`** | Reviewed management-plane versus data-plane permissions; assigned an appropriate Blob data role and verified a new read-only SAS. |
 | **Windows VM failed to start with `ZonalAllocationFailed`** | Identified an Azure compute capacity issue and resized the VM to an available compatible size, restoring access without rebuilding the OS. |
+| **Internal Linux hostname resolved to the wrong IP** | Introduced a temporary incorrect Windows hosts-file mapping, compared `ping` with `nslookup`, removed the mapping, flushed the DNS cache, and verified TCP port 80 connectivity. |
+| **Windows-to-Ubuntu HTTP blocked by an NSG** | Applied a temporary targeted deny rule, confirmed the connection failure, identified the rule with Network Watcher IP flow verify, removed it, and retested successfully. |
+| **Public HTTP access denied** | Used Network Watcher to confirm that inbound internet-originated TCP port 80 traffic matched the default `DenyAllInBound` rule. |
 
 I document the **symptom, diagnostic approach, root cause or finding, corrective action, and validation** wherever the lab provides a meaningful troubleshooting scenario.
 
@@ -74,6 +89,8 @@ I document the **symptom, diagnostic approach, root cause or finding, corrective
 | Network security group | `nsg-smakonnect-servers-01`, associated with the Servers subnet |
 | Windows VM | `vm-smakonnect-win-01` — Windows Server 2022 — `10.10.2.4` |
 | Linux VM | `vm-smakonnect-linux-01` — Ubuntu Server 24.04 — `10.10.2.5` |
+| VNet DNS | Azure-provided DNS (default) |
+| Routing | Azure system routes; no user-defined route table attached to the tested Windows VM NIC |
 | Storage account | `stsmakonnectlab01` — Standard StorageV2, LRS |
 | Blob container | `smakonnect-documents` — private |
 | Azure file share | `smakonnect-it-share` — SMB |
@@ -98,15 +115,15 @@ The storage account currently uses **selected-network public endpoint access**, 
 | 03 | RBAC and access management | Completed | [View](phase-03-azure-rbac/azure-rbac-access-management.md) |
 | 04 | Virtual networking and NSGs | Completed | [View](phase-04-azure-virtual-networking/azure-virtual-networking-configuration.md) |
 | 05 | Windows and Linux VM administration | Completed | [View](phase-05-azure-virtual-machines/azure-virtual-machines-deployment.md) |
-| 06 | Azure Storage and data protection | **Completed** | [View](phase-06-azure-storage/azure-storage-administration.md) |
-| 07 | Advanced networking and connectivity | Next | — |
-| 08 | Monitoring and diagnostics | Planned | — |
+| 06 | Azure Storage and data protection | Completed | [View](phase-06-azure-storage/azure-storage-administration.md) |
+| 07 | Advanced networking and connectivity troubleshooting | **Completed** | [View](phase-07-advanced-networking/azure-advanced-networking-troubleshooting.md) |
+| 08 | Monitoring and diagnostics | **Next** | — |
 | 09 | Backup and disaster recovery | Planned | — |
 | 10 | PowerShell, Azure CLI, and Bicep | Planned | — |
 | 11 | MSP troubleshooting scenarios | Planned | — |
 | 12 | Final infrastructure review and interview preparation | Planned | — |
 
-**Progress: 6/12 phases (50%).** Screenshots and configuration evidence are organized within the completed phase folders.
+**Progress: 7/12 phases (58%).** Screenshots and configuration evidence are organized within the completed phase folders.
 
 ## Security, Constraints, and Next Improvements
 
@@ -114,8 +131,8 @@ The lab uses **private Blob access, Azure RBAC, NSGs, restricted administrative 
 
 The school-managed Microsoft Entra tenant limits tenant-level identity administration. I documented this boundary rather than claiming administrative access I do not have. Azure Files uses storage account key authentication in this lab; identity-based SMB authentication is a potential future improvement.
 
-**Next areas of work:** Advanced network diagnostics and connectivity, monitoring and alerting, backup and recovery, automation with PowerShell/Azure CLI/Bicep, and realistic MSP support scenarios. Additional hardening options—including private endpoints, more restrictive administrative access, and keyless storage authentication—remain future considerations, not completed implementations.
+**Next areas of work:** Azure Monitor and diagnostic logging, alerting, backup and recovery, automation with PowerShell/Azure CLI/Bicep, and realistic MSP support scenarios. Additional hardening options—including private endpoints, more restrictive administrative access, and keyless storage authentication—remain future considerations, not completed implementations.
 
 ## Why This Portfolio Exists
 
-I maintain this repository as a practical record of **what I configured, why I chose it, how I verified it, and how I handled problems**. My aim is to demonstrate transferable skills for **Azure Administrator, Systems Administrator, Cloud Support, and MSP operations** roles, while continuing to develop my technical judgment and AZ-104 knowledge.
+I maintain this repository as a practical record of **what I configured, why I chose it, how I verified it, and how I handled problems**. My aim is to demonstrate transferable skills for **Azure Administrator, Systems Administrator, Cloud Support, and MSP operations** roles, while continuing to develop my technical judgment.
