@@ -3,15 +3,17 @@
 
 **Hands-on Microsoft Azure portfolio | Systems Administration | Cloud Operations | MSP Support**
 
-**Project status:** Active development · **8 of 12 phases completed (67%)** · **Next: Backup and Disaster Recovery**
+**Project status:** Active development · **9 of 12 phases completed (75%)** · **Next: PowerShell, Azure CLI, and Bicep**
 
 ## At a Glance
 
 I designed and administer a connected Microsoft Azure lab for **Smakonnect Tech Innovation**, a fictional organization. The project demonstrates how I approach infrastructure work: plan the environment, deploy services, apply access and security controls, validate functionality, troubleshoot failures, and document the outcome.
 
-The environment includes **Azure governance and RBAC, a four-subnet virtual network, Windows Server 2022, Ubuntu Server 24.04, an internal Nginx website, Azure Blob Storage, Azure Files, and centralized Azure monitoring**.
+The environment includes **Azure governance and RBAC, a four-subnet virtual network, Windows Server 2022, Ubuntu Server 24.04, an internal Nginx website, Azure Blob Storage, Azure Files, centralized Azure monitoring, and Azure VM Backup**.
 
 I have also implemented **Log Analytics, Azure Monitor Agent, Data Collection Rules, Windows Event Log and Linux Syslog collection, KQL queries, metric alerts, Activity Log monitoring, and email notifications**.
+
+In Phase 9, I also configured Azure VM backup protection and successfully recovered a file from a backup recovery point, verifying its integrity using SHA-256.
 
 Each completed phase includes technical documentation and supporting screenshots.
 
@@ -35,6 +37,8 @@ Each completed phase includes technical documentation and supporting screenshots
 | **Azure monitoring** | Azure Monitor metrics, Log Analytics, KQL, Windows Event Logs, Linux Syslog, and Data Collection Rules |
 | **Alerting** | CPU threshold monitoring, VM deallocation Activity Log alert, Action Group email notifications, and successful live alert tests |
 | **Administrative auditing** | Subscription Activity Log diagnostic export, AzureActivity queries, and investigation of VM operations |
+| **Backup and recovery** | Recovery Services vault, enhanced daily VM backup policy, successful application-consistent backup, file-level restore, and SHA-256 integrity verification |
+| **Disaster recovery planning** | Reviewed VM/disk restore options, Azure Site Recovery architecture, RPO/RTO, retention, and soft delete; no full VM restore or Site Recovery replication performed |
 | **Operations** | VM allocation troubleshooting, connectivity diagnosis, recovery validation, Resource Health checks, and cost-conscious resource management |
 
 ## Selected Implementation Highlights
@@ -113,6 +117,20 @@ Stopped and deallocated the VM, received the alert email, and verified the admin
 
 [Explore monitoring alerts and validation](phase-08-monitoring-and-diagnostics/phase-08-azure-monitoring-and-diagnostics.md)
 
+### 07 — Protected an Azure VM and Verified File Recovery
+
+Configured a **Recovery Services vault** (`rsv-smakonnect-backup-01`) and an **Enhanced Azure VM Backup policy** to protect `vm-smakonnect-win-01`, a Windows Server 2022 VM. The policy schedules daily backups at **02:00 UTC**, with **7-day vault retention** and **2-day instant restore snapshot retention**.
+
+Validated the initial backup on **November 12, 2026**: the backup pre-check passed, the job completed successfully, and Azure reported an **application-consistent recovery point**. The snapshot, transfer-to-vault, and validation stages all succeeded.
+
+For a practical recovery test, mounted the backed-up Windows volume, recovered `DtcInstall.log` to the live VM, and compared **SHA-256 hashes** of the backed-up and restored files. The hashes matched, confirming file integrity. The recovery disks were then unmounted.
+
+I also reviewed **full VM restore, disk restore, Azure Site Recovery, RPO/RTO, and backup security**. These were documented as configuration exploration and recovery planning, **not completed full-VM restoration or Site Recovery failover**.
+
+**Why it matters:** Backup protection is only useful when recoverability can be demonstrated. This lab combines policy configuration, job validation, a successful file restore, and integrity testing.
+
+[Explore Phase 9 Azure Backup and Disaster Recovery](phase-09-azure-backup-disaster-recovery/phase-09-backup-disaster-recovery.md)
+
 ## Troubleshooting in Practice
 
 | Issue | Investigation and outcome |
@@ -127,6 +145,9 @@ Stopped and deallocated the VM, received the alert email, and verified the admin
 | **AzureActivity query initially returned no records** | Identified the missing subscription diagnostic export, configured Administrative Activity Log collection, and verified records in Log Analytics. |
 | **Windows and Linux monitoring validation** | Generated controlled Windows service and Linux Syslog events and confirmed successful ingestion through KQL. |
 | **CPU and VM deallocation alerts** | Generated test conditions, received email notifications, and verified supporting monitoring data. |
+| **VM backup policy incompatible with Trusted Launch** | Used an Enhanced VM backup policy instead of the initial Standard policy configuration, then completed a successful backup. |
+| **File absent from selected backup** | Confirmed that a file created after the recovery-point timestamp could not be found in that earlier backup; recovered an existing backed-up file instead and validated its SHA-256 hash. |
+| **Site Recovery region validation** | Explored cross-region replication requirements and identified the need for an appropriately located recovery vault; replication was not enabled. |
 
 I document the **symptom, diagnostic approach, root cause or finding, corrective action, and validation** wherever the lab provides a meaningful troubleshooting scenario.
 
@@ -153,6 +174,11 @@ I document the **symptom, diagnostic approach, root cause or finding, corrective
 | CPU alert | `alert-smakonnect-linux-high-cpu-01` |
 | Activity Log alert | `alert-smakonnect-linux-deallocate-01` |
 | Activity Log diagnostic setting | `diag-smakonnect-activity-logs-01` |
+| Recovery Services vault | `rsv-smakonnect-backup-01` — Canada Central, LRS |
+| Protected backup workload | `vm-smakonnect-win-01` — Windows Server 2022 |
+| Enhanced VM backup policy | `bp-smakonnect-vm-enhanced-01` — daily 02:00 UTC, 7-day vault retention, 2-day instant restore retention |
+| Backup security | Soft delete configured as Always On |
+| Site Recovery replication | Not enabled; 0 replicated items |
 
 ### Subnet Design
 
@@ -179,18 +205,18 @@ A **private endpoint has not been deployed**.
 | 06 | Azure Storage and data protection | Completed | [View](phase-06-azure-storage/azure-storage-administration.md) |
 | 07 | Advanced networking and connectivity troubleshooting | **Completed** | [View](phase-07-advanced-networking/azure-advanced-networking-troubleshooting.md) |
 | 08 | Azure Monitoring and Diagnostics | **Completed** | [View](phase-08-monitoring-and-diagnostics/phase-08-azure-monitoring-and-diagnostics.md) |
-| 09 | Backup and disaster recovery | **Next** | — |
-| 10 | PowerShell, Azure CLI, and Bicep | Planned | — |
+| 09 | Azure Backup and disaster recovery | **Completed** | [View](phase-09-azure-backup-disaster-recovery/phase-09-backup-disaster-recovery.md) |
+| 10 | PowerShell, Azure CLI, and Bicep | **Next** | — |
 | 11 | MSP troubleshooting scenarios | Planned | — |
 | 12 | Final infrastructure review and interview preparation | Planned | — |
 
-**Progress: 8/12 phases (67%).**
+**Progress: 9/12 phases (75%).**
 
 Screenshots, configuration evidence, troubleshooting records, and validation results are organized within the completed phase folders.
 
 ## Security, Constraints, and Next Improvements
 
-The lab uses **private Blob access, Azure RBAC, NSGs, restricted administrative access, SSH public-key authentication, storage network rules, and soft-delete protection**.
+The lab uses **private Blob access, Azure RBAC, NSGs, restricted administrative access, SSH public-key authentication, storage network rules, and soft-delete protection**. Azure VM Backup also uses a Recovery Services vault with **soft delete set to Always On**.
 
 I also use tagging, budget alerts, and VM deallocation to manage limited Azure credits.
 
@@ -210,17 +236,15 @@ Azure Files uses storage account key authentication in this lab; identity-based 
 
 ### Next Areas of Work
 
-**Phase 09 — Backup and Disaster Recovery**
+**Phase 10 — PowerShell, Azure CLI, and Bicep**
 
-Planned activities include:
-- Azure Backup concepts and recovery services
-- Recovery Services vault configuration
-- VM backup policy evaluation
-- Backup and restore validation
-- Recovery objectives and disaster recovery planning
-- Cost and security considerations
+Next, I plan to build on the deployed infrastructure by practicing repeatable administration and infrastructure automation:
+- PowerShell and Azure CLI for inventory, configuration, and operational checks
+- Bicep templates for reproducible Azure resource deployment
+- Validation and troubleshooting of scripted infrastructure changes
+- Documentation of commands, templates, and deployment results
 
-Future phases will address infrastructure automation with **PowerShell, Azure CLI, and Bicep**, realistic MSP troubleshooting scenarios, and a final infrastructure review.
+Later phases will address realistic MSP troubleshooting scenarios and a final infrastructure review.
 
 Additional hardening options—including private endpoints, more restrictive administrative access, and keyless storage authentication—remain future considerations, not completed implementations.
 
@@ -236,4 +260,4 @@ This project reflects hands-on infrastructure administration, troubleshooting, o
 
 **Smakonnect Tech Innovation — Azure Infrastructure Administration Portfolio**
 
-**Current progress: 8 of 12 phases completed (67%)**
+**Current progress: 9 of 12 phases completed (75%)**
